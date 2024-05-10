@@ -9,9 +9,12 @@
     "gbraver-burst-core": "^1.29.0"
   },
   "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-plugin-simple-import-sort": "^12.1.0",
     "prettier": "3.2.5",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.8.0"
   },
   "homepage": "https://github.com/kaidouji85/gbraver-burst-cli-v2",
   "keywords": [
@@ -24,6 +27,8 @@
   "scripts": {
     "code-format": "prettier -w src",
     "code-format-check": "prettier --check src",
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "lint": "eslint --max-warnings 0 src",
+    "lint-fix": "eslint --max-warnings 0  --fix src"
   }
 }
