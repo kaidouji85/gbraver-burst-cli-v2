@@ -16,6 +16,9 @@
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.8.0"
   },
+  "engines": {
+    "node": "20.x"
+  },
   "homepage": "https://github.com/kaidouji85/gbraver-burst-cli-v2",
   "keywords": [
     "cli",
