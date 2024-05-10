@@ -1,5 +1,12 @@
 import select from "@inquirer/select";
-import { Armdozers, Pilots, Player, PlayerId } from "gbraver-burst-core";
+import {
+  Armdozers,
+  Pilots,
+  Player,
+  PlayerId,
+  startGBraverBurst,
+} from "gbraver-burst-core";
+import { EOL } from "os";
 
 /** ゲームに参加するプレイヤーIDをまとめたもの */
 const playerIds: [PlayerId, PlayerId] = ["player-01", "player-02"];
@@ -45,11 +52,13 @@ const playerSelect = async (playerId: PlayerId): Promise<Player> => {
  * エントリポイント
  */
 (async () => {
-  console.log("start gbraver burst cli");
+  console.log("start gbraver burst cli" + EOL);
 
   const players: [Player, Player] = [
     await playerSelect(playerIds[0]),
     await playerSelect(playerIds[1]),
   ];
-  console.log(players);
+  const core = startGBraverBurst(players);
+  console.log(EOL + "game start" + EOL);
+  console.dir(core.stateHistory(), { depth: null });
 })();
