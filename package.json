@@ -3,17 +3,27 @@
   "description": "",
   "version": "1.0.0",
   "author": "Y.Takeuchi",
-  "devDependencies": {
-    "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
-  },
-  "license": "ISC",
-  "main": "index.js",
-  "scripts": {
-    "start": "ts-node src/index.ts"
-  },
+  "bugs": "https://github.com/kaidouji85/gbraver-burst-cli-v2/issues",
   "dependencies": {
     "@inquirer/prompts": "^5.0.2",
     "gbraver-burst-core": "^1.29.0"
+  },
+  "devDependencies": {
+    "prettier": "3.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "homepage": "https://github.com/kaidouji85/gbraver-burst-cli-v2",
+  "keywords": [
+    "cli",
+    "gbraver-burst"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "repository": "https://github.com/kaidouji85/gbraver-burst-cli-v2",
+  "scripts": {
+    "code-format": "prettier -w src",
+    "code-format-check": "prettier --check src",
+    "start": "ts-node src/index.ts"
   }
 }
