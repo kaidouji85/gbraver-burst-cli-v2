@@ -67,7 +67,7 @@ const commandSelect = async (
 
   const core = startGBraverBurst([
     await playerSelect("player-01"),
-    await playerSelect("player02"),
+    await playerSelect("player-02"),
   ]);
   console.log(EOL + "game start" + EOL);
   const initialStateHistory = core.stateHistory();
