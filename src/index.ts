@@ -1,7 +1,6 @@
 import select from "@inquirer/select";
 import {
   Armdozers,
-  GameState,
   NoChoice,
   Pilots,
   Player,
@@ -12,49 +11,32 @@ import {
 } from "gbraver-burst-core";
 import { EOL } from "os";
 
-/** ゲームに参加するプレイヤーIDをまとめたもの */
-const playerIds: [PlayerId, PlayerId] = ["player-01", "player-02"];
-
-/** アームドーザの選択肢 */
-const armdozerChoices = Armdozers.map((a) => ({
-  value: a.id,
-}));
-
-/** パイロットの選択肢 */
-const pilotChoices = Pilots.map((p) => ({
-  value: p.id,
-}));
-
 /**
  * アームドーザ、パイロットを選択する
  * @param playerId 選択をするプレイヤーID
  * @returns プレイヤー情報
  */
 const playerSelect = async (playerId: PlayerId): Promise<Player> => {
-  const armdozerId = await select({
+  const armdozer = await select({
     message: `select ${playerId} armdozer`,
-    choices: armdozerChoices,
+    choices: Armdozers.map((a) => ({
+      name: a.id,
+      value: a,
+    })),
   });
-  const armdozer = Armdozers.find((a) => a.id === armdozerId);
-  if (!armdozer) {
-    throw new Error("armdozer not found");
-  }
-
-  const pilotId = await select({
+  const pilot = await select({
     message: `select ${playerId} pilot`,
-    choices: pilotChoices,
+    choices: Pilots.map((p) => ({
+      name: p.id,
+      value: p,
+    })),
   });
-  const pilot = Pilots.find((p) => p.id === pilotId);
-  if (!pilot) {
-    throw new Error("pilot not found");
-  }
-
   return { playerId, armdozer, pilot };
 };
 
 /**
  * コマンド選択
- * @param option コマンド選択情報 
+ * @param option コマンド選択情報
  * @returns 選択したコマンド
  */
 const commandSelect = async (
@@ -84,18 +66,19 @@ const commandSelect = async (
   console.log("start gbraver burst cli" + EOL);
 
   const core = startGBraverBurst([
-    await playerSelect(playerIds[0]),
-    await playerSelect(playerIds[1]),
+    await playerSelect("player-01"),
+    await playerSelect("player02"),
   ]);
   console.log(EOL + "game start" + EOL);
-  const initialStateHistory = core.stateHistory()
+  const initialStateHistory = core.stateHistory();
   console.dir(initialStateHistory, { depth: null });
 
   let lastState = initialStateHistory.at(-1);
   while (lastState && lastState.effect.name === "InputCommand") {
     const inputCommand = lastState.effect;
     const updatedStateHistory = core.progress([
-      await commandSelect(inputCommand.players[0]), await commandSelect(inputCommand.players[1])
+      await commandSelect(inputCommand.players[0]),
+      await commandSelect(inputCommand.players[1]),
     ]);
     console.dir(updatedStateHistory, { depth: null });
     lastState = updatedStateHistory.at(-1);
