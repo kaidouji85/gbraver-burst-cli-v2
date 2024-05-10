@@ -27,8 +27,9 @@
   "scripts": {
     "code-format": "prettier -w src",
     "code-format-check": "prettier --check src",
-    "start": "ts-node src/index.ts",
     "lint": "eslint --max-warnings 0 src",
-    "lint-fix": "eslint --max-warnings 0  --fix src"
+    "lint-fix": "eslint --max-warnings 0  --fix src",
+    "start": "ts-node src/index.ts",
+    "type-check": "tsc --noEmit"
   }
 }
