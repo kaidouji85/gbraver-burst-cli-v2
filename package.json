@@ -5,7 +5,7 @@
   "author": "Y.Takeuchi",
   "bugs": "https://github.com/kaidouji85/gbraver-burst-cli-v2/issues",
   "dependencies": {
-    "@inquirer/prompts": "^5.0.2",
+    "@inquirer/prompts": "^5.0.4",
     "gbraver-burst-core": "^1.29.0"
   },
   "devDependencies": {
@@ -14,7 +14,7 @@
     "prettier": "3.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
-    "typescript-eslint": "^7.8.0"
+    "typescript-eslint": "^7.10.0"
   },
   "engines": {
     "node": "20.x"
