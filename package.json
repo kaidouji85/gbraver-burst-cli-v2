@@ -9,6 +9,7 @@
     "gbraver-burst-core": "^1.29.0"
   },
   "devDependencies": {
+    "dependency-cruiser": "^16.3.2",
     "eslint": "^8.57.0",
     "eslint-plugin-simple-import-sort": "^12.1.0",
     "prettier": "3.2.5",
@@ -30,6 +31,7 @@
   "scripts": {
     "code-format": "prettier -w src",
     "code-format-check": "prettier --check src",
+    "dependency-check": "depcruise src",
     "lint": "eslint --max-warnings 0 src",
     "lint-fix": "eslint --max-warnings 0  --fix src",
     "start": "ts-node src/index.ts",
