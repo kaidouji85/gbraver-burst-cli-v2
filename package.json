@@ -1,6 +1,6 @@
 {
   "name": "gbraver-burst-cli-v2",
-  "description": "",
+  "description": "gbraver burst cli version 2",
   "version": "1.0.0",
   "author": "Y.Takeuchi",
   "bugs": "https://github.com/kaidouji85/gbraver-burst-cli-v2/issues",
@@ -25,7 +25,7 @@
     "cli",
     "gbraver-burst"
   ],
-  "license": "ISC",
+  "license": "MIT",
   "main": "index.js",
   "repository": "https://github.com/kaidouji85/gbraver-burst-cli-v2",
   "scripts": {
