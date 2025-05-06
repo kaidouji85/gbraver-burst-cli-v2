@@ -39,8 +39,9 @@ const battleSummary = (lastState: GameState) => {
   );
   players.forEach((player) => {
     const prefix = player.playerId === lastState.activePlayerId ? "★" : " ";
+    const name = `${player.armdozer.name}(${player.playerId})`.padEnd(25);
     console.log(
-      `${prefix} ${player.playerId} HP: ${player.armdozer.hp} Battery: ${player.armdozer.battery}`,
+      `${prefix} ${name} HP: ${player.armdozer.hp} Battery: ${player.armdozer.battery}`,
     );
   });
 };
