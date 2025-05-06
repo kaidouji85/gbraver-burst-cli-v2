@@ -1,6 +1,7 @@
 import select from "@inquirer/select";
 import {
   Armdozers,
+  GameState,
   NoChoice,
   Pilots,
   Player,
@@ -26,6 +27,22 @@ const playerSelect = async (playerId: PlayerId): Promise<Player> => {
     choices: Pilots.map((p) => ({ name: p.id, value: p })),
   });
   return { playerId, armdozer, pilot };
+};
+
+/**
+ * 最新ステートからバトルサマリーを標準出力に出力する
+ * @param lastState 最新ステート
+ */
+const battleSummary = (lastState: GameState) => {
+  const players = Array.from(lastState.players).sort((a, b) =>
+    a.playerId.localeCompare(b.playerId),
+  );
+  players.forEach((player) => {
+    const prefix = player.playerId === lastState.activePlayerId ? "★" : " ";
+    console.log(
+      `${prefix} ${player.playerId} HP: ${player.armdozer.hp} Battery: ${player.armdozer.battery}`,
+    );
+  });
 };
 
 /**
@@ -69,6 +86,7 @@ const commandSelect = async (
 
   let lastState = initialStateHistory.at(-1);
   while (lastState && lastState.effect.name === "InputCommand") {
+    battleSummary(lastState);
     const commands = Array.from(lastState.effect.players).sort((a, b) =>
       a.playerId.localeCompare(b.playerId),
     );
