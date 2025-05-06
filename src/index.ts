@@ -19,17 +19,11 @@ import { EOL } from "os";
 const playerSelect = async (playerId: PlayerId): Promise<Player> => {
   const armdozer = await select({
     message: `select ${playerId} armdozer`,
-    choices: Armdozers.map((a) => ({
-      name: a.id,
-      value: a,
-    })),
+    choices: Armdozers.map((a) => ({ name: a.id, value: a })),
   });
   const pilot = await select({
     message: `select ${playerId} pilot`,
-    choices: Pilots.map((p) => ({
-      name: p.id,
-      value: p,
-    })),
+    choices: Pilots.map((p) => ({ name: p.id, value: p })),
   });
   return { playerId, armdozer, pilot };
 };
@@ -75,10 +69,12 @@ const commandSelect = async (
 
   let lastState = initialStateHistory.at(-1);
   while (lastState && lastState.effect.name === "InputCommand") {
-    const inputCommand = lastState.effect;
+    const commands = Array.from(lastState.effect.players).sort((a, b) =>
+      a.playerId.localeCompare(b.playerId),
+    );
     const updatedStateHistory = core.progress([
-      await commandSelect(inputCommand.players[0]),
-      await commandSelect(inputCommand.players[1]),
+      await commandSelect(commands[0]),
+      await commandSelect(commands[1]),
     ]);
     console.dir(updatedStateHistory, { depth: null });
     lastState = updatedStateHistory.at(-1);
