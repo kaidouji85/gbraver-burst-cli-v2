@@ -7,6 +7,7 @@ import {
   Player,
   PlayerCommand,
   PlayerId,
+  PlayerState,
   Selectable,
   startGBraverBurst,
 } from "gbraver-burst-core";
@@ -39,8 +40,10 @@ const battleSummary = (lastState: GameState) => {
   );
   players.forEach((player) => {
     const prefix = player.playerId === lastState.activePlayerId ? "★" : " ";
+    const name = `${player.armdozer.name}(${player.playerId})`;
+    console.log(`${prefix} ${name}`);
     console.log(
-      `${prefix} ${player.playerId} HP: ${player.armdozer.hp} Battery: ${player.armdozer.battery}`,
+      `    HP: ${player.armdozer.hp} Battery: ${player.armdozer.battery}`,
     );
   });
 };
@@ -48,10 +51,12 @@ const battleSummary = (lastState: GameState) => {
 /**
  * コマンド選択
  * @param option コマンド選択情報
+ * @param player プレイヤー情報
  * @returns 選択したコマンド
  */
 const commandSelect = async (
   option: Selectable | NoChoice,
+  player: PlayerState,
 ): Promise<PlayerCommand> => {
   const { playerId } = option;
   if (!option.selectable) {
@@ -61,7 +66,7 @@ const commandSelect = async (
 
   const { command } = option;
   const selectedCommand = await select({
-    message: `select ${playerId} command`,
+    message: `select ${player.armdozer.name}(${playerId}) command`,
     choices: command.map((c) => ({
       value: c,
       name: JSON.stringify(c),
@@ -87,12 +92,15 @@ const commandSelect = async (
   let lastState = initialStateHistory.at(-1);
   while (lastState && lastState.effect.name === "InputCommand") {
     battleSummary(lastState);
-    const commands = Array.from(lastState.effect.players).sort((a, b) =>
-      a.playerId.localeCompare(b.playerId),
-    );
+    const sortByPlayerId = (
+      a: { playerId: PlayerId },
+      b: { playerId: PlayerId },
+    ) => a.playerId.localeCompare(b.playerId);
+    const commands = Array.from(lastState.effect.players).sort(sortByPlayerId);
+    const players = Array.from(lastState.players).sort(sortByPlayerId);
     const updatedStateHistory = core.progress([
-      await commandSelect(commands[0]),
-      await commandSelect(commands[1]),
+      await commandSelect(commands[0], players[0]),
+      await commandSelect(commands[1], players[1]),
     ]);
     console.dir(updatedStateHistory, { depth: null });
     lastState = updatedStateHistory.at(-1);
